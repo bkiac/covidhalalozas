@@ -137,7 +137,7 @@ func main() {
 		return
 	}
 
-	sort.Slice(
+	sort.SliceStable(
 		victims,
 		func(i, j int) bool {
 			in, err := strconv.Atoi(victims[i].ID)
