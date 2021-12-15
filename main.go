@@ -39,10 +39,10 @@ func getPage(s string) (int, error) {
 }
 
 type victim struct {
-	ID  string
-	Sex string
-	Age string
-	UMC string // Underlying Medical Conditions
+	Number string
+	Sex    string
+	Age    string
+	UMC    string // Underlying Medical Conditions
 }
 
 func getVictimField(e *colly.HTMLElement, selector string) string {
@@ -51,10 +51,10 @@ func getVictimField(e *colly.HTMLElement, selector string) string {
 
 func getVictim(e *colly.HTMLElement) victim {
 	return victim{
-		ID:  getVictimField(e, idSelector),
-		Sex: getVictimField(e, sexSelector),
-		Age: getVictimField(e, ageSelector),
-		UMC: getVictimField(e, umcSelector),
+		Number: getVictimField(e, idSelector),
+		Sex:    getVictimField(e, sexSelector),
+		Age:    getVictimField(e, ageSelector),
+		UMC:    getVictimField(e, umcSelector),
 	}
 }
 
@@ -62,7 +62,7 @@ func victimsToData(victims []victim) [][]string {
 	var data [][]string
 	for _, v := range victims {
 		var row []string
-		row = append(row, v.ID)
+		row = append(row, v.Number)
 		row = append(row, v.Sex)
 		row = append(row, v.Age)
 		row = append(row, v.UMC)
@@ -140,8 +140,8 @@ func main() {
 	sort.SliceStable(
 		victims,
 		func(i, j int) bool {
-			in, err := strconv.Atoi(victims[i].ID)
-			ij, err2 := strconv.Atoi(victims[j].ID)
+			in, err := strconv.Atoi(victims[i].Number)
+			ij, err2 := strconv.Atoi(victims[j].Number)
 			if err != nil || err2 != nil {
 				return false
 			}
