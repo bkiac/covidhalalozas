@@ -9,6 +9,10 @@ import (
 )
 
 const url = "https://koronavirus.gov.hu/elhunytak"
+const idClass = ".views-field-field-elhunytak-sorszam"
+const sexClass = ".views-field-field-elhunytak-nem"
+const ageClass = ".views-field-field-elhunytak-kor"
+const umcClass = ".views-field-field-elhunytak-alapbetegsegek"
 
 var lastPageRegexp = regexp.MustCompile(
 	`^/elhunytak\?page=([0-9]+)$`,
@@ -20,6 +24,23 @@ func getPage(page int) string {
 
 func handleRequest(r *colly.Request) {
 	fmt.Println("Visiting", r.URL)
+}
+
+type victim struct {
+	ID  string
+	Sex string
+	Age string
+	UMC string // Underlying Medical Conditions
+}
+
+// Parse victim table row
+func getVictim(e *colly.HTMLElement) (victim, error) {
+	var v victim
+	v.ID = e.DOM.Find(idClass).Text()
+	v.Sex = e.DOM.Find(sexClass).Text()
+	v.Age = e.DOM.Find(ageClass).Text()
+	v.UMC = e.DOM.Find(umcClass).Text()
+	return v, nil
 }
 
 func main() {
@@ -39,9 +60,20 @@ func main() {
 		lastPage = i
 	})
 
+	var victims []victim
+	c.OnHTML("tbody > tr", func(e *colly.HTMLElement) {
+		v, err := getVictim(e)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		victims = append(victims, v)
+	})
+
 	if err := c.Visit(url); err != nil {
 		fmt.Println(err)
 		return
 	}
 	fmt.Println(lastPage, getPage(lastPage))
+	fmt.Println(victims)
 }
