@@ -41,7 +41,6 @@ func getVictimField(e *colly.HTMLElement, selector string) string {
 	return strings.TrimSpace(e.DOM.Find(selector).Text())
 }
 
-// Parse victim table row
 func getVictim(e *colly.HTMLElement) (victim, error) {
 	var v victim
 	v.ID = getVictimField(e, idClass)
