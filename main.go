@@ -18,8 +18,16 @@ func getPage(page int) string {
 	return fmt.Sprintf("%s?page=%d", url, page)
 }
 
+func handleRequest(r *colly.Request) {
+	fmt.Println("Visiting", r.URL)
+}
+
 func main() {
 	c := colly.NewCollector()
+	c2 := c.Clone()
+
+	c.OnRequest(handleRequest)
+	c2.OnRequest(handleRequest)
 
 	var lastPage int
 	c.OnHTML(".pager-last > a", func(e *colly.HTMLElement) {
