@@ -1,9 +1,12 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
+	"os"
 	"regexp"
 	"strconv"
+	"strings"
 
 	"github.com/gocolly/colly/v2"
 )
@@ -13,6 +16,7 @@ const idClass = ".views-field-field-elhunytak-sorszam"
 const sexClass = ".views-field-field-elhunytak-nem"
 const ageClass = ".views-field-field-elhunytak-kor"
 const umcClass = ".views-field-field-elhunytak-alapbetegsegek"
+const victimsCSVPath = "victims.csv"
 
 var lastPageRegexp = regexp.MustCompile(
 	`^/elhunytak\?page=([0-9]+)$`,
@@ -33,14 +37,46 @@ type victim struct {
 	UMC string // Underlying Medical Conditions
 }
 
+func getVictimField(e *colly.HTMLElement, selector string) string {
+	return strings.TrimSpace(e.DOM.Find(selector).Text())
+}
+
 // Parse victim table row
 func getVictim(e *colly.HTMLElement) (victim, error) {
 	var v victim
-	v.ID = e.DOM.Find(idClass).Text()
-	v.Sex = e.DOM.Find(sexClass).Text()
-	v.Age = e.DOM.Find(ageClass).Text()
-	v.UMC = e.DOM.Find(umcClass).Text()
+	v.ID = getVictimField(e, idClass)
+	v.Sex = getVictimField(e, sexClass)
+	v.Age = getVictimField(e, ageClass)
+	v.UMC = getVictimField(e, umcClass)
 	return v, nil
+}
+
+func victimsToData(victims []victim) [][]string {
+	var data [][]string
+	for _, v := range victims {
+		var row []string
+		row = append(row, v.ID)
+		row = append(row, v.Sex)
+		row = append(row, v.Age)
+		row = append(row, v.UMC)
+		data = append(data, row)
+	}
+	fmt.Println(data)
+	return data
+}
+
+func writeCSV(victims []victim) error {
+	f, err := os.Create(victimsCSVPath)
+	if err != nil {
+		return err
+	}
+	var data = victimsToData(victims)
+	w := csv.NewWriter(f)
+	err = w.WriteAll(data)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func main() {
@@ -74,6 +110,10 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+
 	fmt.Println(lastPage, getPage(lastPage))
-	fmt.Println(victims)
+
+	if err := writeCSV(victims); err != nil {
+		fmt.Println(err)
+	}
 }
