@@ -1,0 +1,21 @@
+name: "Hungary COVID Victims Data Archive"
+
+on:
+ push:
+  branches:
+   - master
+ schedule:
+  - cron: "0 4 * * *"
+ workflow_dispatch:
+  branches: [master]
+
+jobs:
+ backup:
+  runs-on: ubuntu-latest
+  name: Archive
+  timeout-minutes: 5
+  steps:
+   - uses: actions/checkout@v2
+   - uses: actions/setup-go@v2
+   - run: go run main.go
+   - run: ./commit_archive.sh
