@@ -1,7 +1,39 @@
-package covidhalalozas
+package main
 
-import "fmt"
+import (
+	"fmt"
+	"regexp"
+	"strconv"
+
+	"github.com/gocolly/colly/v2"
+)
+
+const url = "https://koronavirus.gov.hu/elhunytak"
+
+var lastPageRegexp = regexp.MustCompile(
+	`^/elhunytak\?page=([0-9]+)$`,
+)
+
+func getPage(page int) string {
+	return fmt.Sprintf("%s?page=%d", url, page)
+}
 
 func main() {
-	fmt.Println("hello")
+	c := colly.NewCollector()
+
+	var lastPage int
+	c.OnHTML(".pager-last > a", func(e *colly.HTMLElement) {
+		i, err := strconv.Atoi(lastPageRegexp.FindStringSubmatch(e.Attr("href"))[1])
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		lastPage = i
+	})
+
+	if err := c.Visit(url); err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(lastPage, getPage(lastPage))
 }
