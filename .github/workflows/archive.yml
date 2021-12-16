@@ -10,7 +10,7 @@ jobs:
  backup:
   runs-on: ubuntu-latest
   name: Archive
-  timeout-minutes: 5
+  timeout-minutes: 15
   steps:
    - uses: actions/checkout@v2
    - uses: actions/setup-go@v2
