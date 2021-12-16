@@ -5558,8 +5558,8 @@
 31675,Férfi,87,"prosztatatúltengés, iszkémiás szívbetegség, magas vérnyomás"
 31674,Nõ,88,"magas vérnyomás, demencia"
 31673,Férfi,71,"epilepszia, magas vérnyomás, cukorbetegség"
-31671,Férfi,59,"magas vérnyomás, reflux"
 31671,Nõ,66,tüdõ rosszindulatú daganata
+31671,Férfi,59,"magas vérnyomás, reflux"
 31670,Nõ,76,"magasvérnyomás-betegség, cukorbetegség, krónikus veseelégtelenség"
 31669,Nõ,76,"gerinccsatorna szûkület, magas vérnyomás"
 31668,Nõ,75,"érelmeszesedés, magas vérnyomás"
@@ -11789,6 +11789,7 @@
 25444,nõ,61,"magasvérnyomás-betegség, cukorbetegség"
 25443,férfi,58,"magasvérnyomás-betegség, iszkémiás szívbetegség, kóros elhízás"
 25442,férfi,53,magasvérnyomás-betegség
+25441,férfi,31,"magasvérnyomás-betegség, extrém kóros elhízás"
 25440,férfi,65,nem ismert alapbetegség
 25439,férfi,56,"magasvérnyomás-betegség, leukémia"
 25438,férfi,63,"magasvérnyomás-betegség, asztma"
@@ -11823,6 +11824,7 @@
 25409,nõ,77,magasvérnyomás-betegség
 25408,férfi,64,"anyagcsere mûködés zavara, vesekõ"
 25407,nõ,71,"iszkémiás szívbetegség, cukorbetegség, általános és agyi érelmeszesedés"
+25406,férfi,56,nem ismert alapbetegség
 25405,férfi,64,"rosszindulatú daganatos megbetegedés, kóros lesoványodás"
 25404,nõ,63,demencia
 25403,férfi,89,magasvérnyomás-betegség
@@ -20472,6 +20474,7 @@ húgyhólyag- és vesemedence-gyulladás, polipózis"
 16760,Férfi,79,"magas vérnyomás, szívelégtelenség, cukorbetegség, pitvarfibrilláció"
 16759,Férfi,69,"magas vérnyomás, cukorbetegség"
 16758,Férfi,73,májbetegség
+16757,Férfi,52,magas vérnyomás
 16756,Férfi,64,magas vérnyomás
 16755,Férfi,75,"belsõ fül megbetegedése, epekõ, vesedaganat, hasnyálmirigy gyulladás"
 16754,Nõ,79,"magasvérnyomás-betegség, cukorbetegség, krónikus veseelégtelenség"
