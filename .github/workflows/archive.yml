@@ -2,7 +2,7 @@ name: "Hungary COVID Victims Data Archive"
 
 on:
  schedule:
-  - cron: "0 4 * * *"
+  - cron: "0 2 * * *"
  workflow_dispatch:
   branches: [master]
 
