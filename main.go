@@ -140,12 +140,14 @@ func main() {
 	sort.SliceStable(
 		victims,
 		func(i, j int) bool {
-			in, err := strconv.Atoi(victims[i].Number)
-			ij, err2 := strconv.Atoi(victims[j].Number)
+			a := victims[i]
+			b := victims[j]
+			in, err := strconv.Atoi(a.Number)
+			ij, err2 := strconv.Atoi(b.Number)
 			if err != nil || err2 != nil {
 				return false
 			}
-			return in > ij
+			return in > ij && a.Sex > b.Sex && a.Age > b.Age && a.UMC > b.UMC
 		},
 	)
 	if err := writeCSV(victims); err != nil {
