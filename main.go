@@ -111,7 +111,7 @@ func main() {
 	}
 
 	c2 := c.Clone()
-	q, _ := queue.New(2, &queue.InMemoryQueueStorage{MaxSize: lastPage})
+	q, _ := queue.New(1, &queue.InMemoryQueueStorage{MaxSize: lastPage})
 	for i := 1; i <= lastPage; i++ {
 		if err := q.AddURL(getPageURL(i)); err != nil {
 			fmt.Println(err)
